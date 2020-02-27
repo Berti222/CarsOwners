@@ -11,7 +11,8 @@ namespace CarsOwners.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Owners
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +22,19 @@ namespace CarsOwners.Models
         }
     
         public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Vezetéknév")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Keresztnév")]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Születési dátum")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

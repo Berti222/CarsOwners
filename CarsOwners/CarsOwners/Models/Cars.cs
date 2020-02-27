@@ -11,7 +11,8 @@ namespace CarsOwners.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Cars
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +22,17 @@ namespace CarsOwners.Models
         }
     
         public int Id { get; set; }
+
+        [Display(Name ="Autó márka")]
         public string CarBrand { get; set; }
+
+        [Display(Name = "Autó Típus")]
         public string CarType { get; set; }
+
+        [Display(Name = "Rendszám")]
         public string LicensePlateNumber { get; set; }
+
+        [Display(Name = "Gyártás Dátuma")]
         public Nullable<System.DateTime> DateOfProduction { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
