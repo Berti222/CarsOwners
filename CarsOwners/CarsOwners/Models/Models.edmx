@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CarsesOwnerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarBrand" Type="varchar" MaxLength="255" />
+          <Property Name="CarType" Type="varchar" MaxLength="255" />
+          <Property Name="LicensePlateNumber" Type="varchar" MaxLength="255" />
+          <Property Name="DateOfProduction" Type="date" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="date" />
+        </EntityType>
+        <EntityType Name="SwitchTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnersId" Type="int" />
+          <Property Name="CarsId" Type="int" />
+        </EntityType>
+        <Association Name="FK__SwitchTab__CarsI__286302EC">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="0..1" />
+          <End Role="SwitchTable" Type="Self.SwitchTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SwitchTable">
+              <PropertyRef Name="CarsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SwitchTab__Owner__276EDEB3">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="0..1" />
+          <End Role="SwitchTable" Type="Self.SwitchTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SwitchTable">
+              <PropertyRef Name="OwnersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarsesOwnerModelStoreContainer">
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SwitchTable" EntityType="Self.SwitchTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__SwitchTab__CarsI__286302EC" Association="Self.FK__SwitchTab__CarsI__286302EC">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="SwitchTable" EntitySet="SwitchTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SwitchTab__Owner__276EDEB3" Association="Self.FK__SwitchTab__Owner__276EDEB3">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="SwitchTable" EntitySet="SwitchTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarsesOwnerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarBrand" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CarType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LicensePlateNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfProduction" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="SwitchTable" Relationship="Self.FK__SwitchTab__CarsI__286302EC" FromRole="Cars" ToRole="SwitchTable" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="SwitchTable" Relationship="Self.FK__SwitchTab__Owner__276EDEB3" FromRole="Owners" ToRole="SwitchTable" />
+        </EntityType>
+        <EntityType Name="SwitchTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnersId" Type="Int32" />
+          <Property Name="CarsId" Type="Int32" />
+          <NavigationProperty Name="Cars" Relationship="Self.FK__SwitchTab__CarsI__286302EC" FromRole="SwitchTable" ToRole="Cars" />
+          <NavigationProperty Name="Owners" Relationship="Self.FK__SwitchTab__Owner__276EDEB3" FromRole="SwitchTable" ToRole="Owners" />
+        </EntityType>
+        <Association Name="FK__SwitchTab__CarsI__286302EC">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="0..1" />
+          <End Role="SwitchTable" Type="Self.SwitchTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SwitchTable">
+              <PropertyRef Name="CarsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SwitchTab__Owner__276EDEB3">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="0..1" />
+          <End Role="SwitchTable" Type="Self.SwitchTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SwitchTable">
+              <PropertyRef Name="OwnersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarsesOwnerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cars" EntityType="Self.Cars" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" />
+          <EntitySet Name="SwitchTable" EntityType="Self.SwitchTable" />
+          <AssociationSet Name="FK__SwitchTab__CarsI__286302EC" Association="Self.FK__SwitchTab__CarsI__286302EC">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="SwitchTable" EntitySet="SwitchTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SwitchTab__Owner__276EDEB3" Association="Self.FK__SwitchTab__Owner__276EDEB3">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="SwitchTable" EntitySet="SwitchTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarsesOwnerModelStoreContainer" CdmEntityContainer="CarsesOwnerEntities">
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="CarsesOwnerModel.Cars">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CarBrand" ColumnName="CarBrand" />
+                <ScalarProperty Name="CarType" ColumnName="CarType" />
+                <ScalarProperty Name="LicensePlateNumber" ColumnName="LicensePlateNumber" />
+                <ScalarProperty Name="DateOfProduction" ColumnName="DateOfProduction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="CarsesOwnerModel.Owners">
+              <MappingFragment StoreEntitySet="Owners">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SwitchTable">
+            <EntityTypeMapping TypeName="CarsesOwnerModel.SwitchTable">
+              <MappingFragment StoreEntitySet="SwitchTable">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OwnersId" ColumnName="OwnersId" />
+                <ScalarProperty Name="CarsId" ColumnName="CarsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
