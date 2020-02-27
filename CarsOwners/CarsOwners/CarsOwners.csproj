@@ -170,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\OwnerAndCarsDTO.cs" />
     <Compile Include="Models\Owners.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
@@ -228,11 +229,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Owners\Index.cshtml" />
     <Content Include="Views\Owners\OwnersForm.cshtml" />
     <Content Include="Views\Cars\Index.cshtml" />
     <Content Include="Views\Cars\CarsForm.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,9 +21,11 @@ namespace CarsOwners.Controllers
         [HttpGet]
         public IHttpActionResult GetCars(int id)
         {
+            Owners owner = _context.Owners.SingleOrDefault(x => x.Id == id);
+
             IQueryable<SwitchTable> ownerCarsIds = _context.SwitchTable.Where(x => x.OwnersId == id);
 
-            if (ownerCarsIds == null)
+            if (owner == null)
                 return NotFound();
 
             IQueryable<Cars> cars = _context.Cars;
@@ -46,7 +48,17 @@ namespace CarsOwners.Controllers
                     ownerCars.Add(dto);
                 }
             }
-            return Ok(ownerCars);
+
+
+            OwnerAndCarsDTO ownerAndCarsDTO = new OwnerAndCarsDTO();
+            ownerAndCarsDTO.Cars = ownerCars;
+            ownerAndCarsDTO.Id = owner.Id;
+            ownerAndCarsDTO.FirstName = owner.FirstName;
+            ownerAndCarsDTO.LastName = owner.LastName;
+            ownerAndCarsDTO.DateOfBirth = owner.DateOfBirth;
+
+
+            return Ok(ownerAndCarsDTO);
         }
     }
 }

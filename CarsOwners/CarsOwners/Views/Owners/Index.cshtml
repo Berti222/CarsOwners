@@ -53,9 +53,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Személyes adatok és autók</h4>
             </div>
             <div class="modal-body">
+                <h3>Személy adatai</h3>
+                <dl id="js-userData">
+                    <dt>Név:</dt>
+                    <dd></dd>
+                    <dt>Név:</dt>
+                    <dd></dd>
+                </dl>
+                <h3>Autói</h3>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -90,21 +98,31 @@
                         .then((response) => {
                             return response.json();
                         })
-                        .then((cars) => {
-                            console.log(cars);
+                        .then((owner) => {
+                            console.log(owner);
+
+                            const bidthDay = owner.DateOfBirth.slice(0, 10);
+                            const userData = `
+                                                <dt>Név:</dt>
+                                                <dd>${owner.FirstName} ${owner.LastName}</dd>
+                                                <br/>
+                                                <dt>Születési dátum:</dt>
+                                                <dd>${bidthDay}</dd>
+                                            `
+                            $('#js-userData').html(userData);
 
                             const tbody = $('.js-content');
                             tbody.innerHTML = '';
 
                             let contant = "";
-                            for (let i = 0; i < cars.length; i++) {
-                                const date = cars[i].DateOfProduction.slice(0,10);
+                            for (let item of owner.Cars) {
+                                const date = item.DateOfProduction.slice(0,10);
                                 contant +=
                                     ` 
                                       <tr>
-                                        <td>${cars[i].CarBrand}</td>
-                                        <td>${cars[i].CarType}</td>
-                                        <td>${cars[i].LicensePlateNumber}</td>
+                                        <td>${item.CarBrand}</td>
+                                        <td>${item.CarType}</td>
+                                        <td>${item.LicensePlateNumber}</td>
                                         <td>${date}</td>
                                       </tr>
                                     `;
