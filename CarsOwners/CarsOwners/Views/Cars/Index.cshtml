@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CarsOwners.Models.Cars>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Autók</h2>
+
+<p>
+    @Html.ActionLink("Új autó hozzáadása", "Create", null, new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CarBrand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlateNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfProduction)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarBrand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicensePlateNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfProduction)
+        </td>
+        <td>
+            @Html.ActionLink("Szerkesztés", "Edit", new { id = item.Id }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("Törlés", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -23,16 +23,22 @@ namespace CarsOwners.Models
     
         public int Id { get; set; }
 
+        [Required]
         [Display(Name ="Autó márka")]
         public string CarBrand { get; set; }
 
+        [Required]
         [Display(Name = "Autó Típus")]
         public string CarType { get; set; }
 
+        [Required]
         [Display(Name = "Rendszám")]
         public string LicensePlateNumber { get; set; }
 
+        [Required]
         [Display(Name = "Gyártás Dátuma")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> DateOfProduction { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
