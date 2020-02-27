@@ -7,7 +7,7 @@
 <h2>Tulajdonosok</h2>
 
 <p>
-    @Html.ActionLink("Új létrehozása", "Create",null, new { @class = "btn btn-default" } )
+    @Html.ActionLink("Új létrehozása", "Create", null, new { @class = "btn btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -23,44 +23,102 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfBirth)
-        </td>
-        <td>
-            @Html.ActionLink("Szerkesztés", "Edit", new { id=item.Id }, new { @class = "btn btn-default"}) |
-            @Html.ActionLink("Törlés", "Delete", new { id=item.Id }, new { @class = "btn btn-danger" }) |
-            <button id="@item.Id" class="btn btn-success btn-cars">Autók</button>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.ActionLink("Szerkesztés", "Edit", new { id = item.Id }, new { @class = "btn btn-default" }) |
+                @Html.ActionLink("Törlés", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" }) |
+                <button id="@item.Id" class="btn btn-success btn-cars" data-toggle="modal" data-target="#myModal">Autók</button>
+            </td>
+        </tr>
+    }
 
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Autó márka</th>
+                            <th>Autó típus</th>
+                            <th>Rendszám</th>
+                            <th>Gyártás Dátuma</th>
+                        </tr>
+                    </thead>
+                    <tbody class="js-content">
+                       
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Bezár</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 @section scripts{
     <script>
         $(document).ready(
-            function() {
+            function () {
                 $(".btn-cars").on("click", function () {
                     let id = this.getAttribute("id");
 
-                    fetch('/api/OwnersCars/'+ id)
+                    fetch('/api/OwnersCars/' + id)
                         .then((response) => {
                             return response.json();
                         })
-                        .then((data) => {
-                            console.log(data);
+                        .then((cars) => {
+                            console.log(cars);
+
+                            const tbody = $('.js-content');
+                            tbody.innerHTML = '';
+
+                            let contant = "";
+                            for (let i = 0; i < cars.length; i++) {
+                                const date = cars[i].DateOfProduction.slice(0,10);
+                                contant +=
+                                    ` 
+                                      <tr>
+                                        <td>${cars[i].CarBrand}</td>
+                                        <td>${cars[i].CarType}</td>
+                                        <td>${cars[i].LicensePlateNumber}</td>
+                                        <td>${date}</td>
+                                      </tr>
+                                    `;
+                            }
+                            $('.js-content').html(contant);
                         });
+
+
+
                 });
+                $('.js-content').html(
+                );
             }
         );
     </script>
-    
+
 }
