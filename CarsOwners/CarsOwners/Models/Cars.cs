@@ -33,6 +33,8 @@ namespace CarsOwners.Models
 
         [Required]
         [Display(Name = "Rendszám")]
+        [RegularExpression(@"[A-Z]{3}-[0-9]{3}", 
+            ErrorMessage = "Helyteln formátum. A formátum stílusa a következõ szerint: \"AAA-123\" (3 nagy betû, kötõjel, 3 db szám)")]
         public string LicensePlateNumber { get; set; }
 
         [Required]
